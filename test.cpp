@@ -104,6 +104,6 @@ int main()
       , res
     );
 
-    std::cout << b << std::endl;
+    std::cout << b << " " << res << std::endl;
 
  }

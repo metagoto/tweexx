@@ -129,7 +129,7 @@ struct tweet_parser : boost::spirit::qi::grammar<Iterator, std::string()>
 
 
 // simple API
-bool tweexx(const std::string& input, std::string output)
+bool tweexx(const std::string& input, std::string& output)
 {
     typedef std::string::const_iterator iter_t;
 
