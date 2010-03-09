@@ -5,7 +5,7 @@
 #include <boost/spirit/include/phoenix_container.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/regex/pending/unicode_iterator.hpp>
+//#include <boost/regex/pending/unicode_iterator.hpp> // not yet used
 
 
 namespace runpac {
@@ -138,7 +138,6 @@ bool tweexx(const std::string& input, std::string& output)
 
     runpac::tweet_parser<iter_t> p;
 
-    std::string result;
     if (boost::spirit::qi::parse(first, last, p, output) && first == last)
         return true;
     else
