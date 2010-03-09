@@ -1,0 +1,6 @@
+tweexx.*
+!tweexx.hpp
+demo
+test
+*.o
+

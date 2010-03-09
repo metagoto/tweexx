@@ -1,0 +1,85 @@
+tweexx c++ tweet parser
+
+Parse and generate html-friendly tweets using Boost Spirit Qi
+http://boost-spirit.com
+
+Very simple grammar. Will be completed. 
+
+
+---
+Simple API
+---
+
+std::string result;
+bool ok = runpac::tweexx(
+  "RT @mongodb: State of #MongoDB March 2010 http://blog.mongodb.org/post/434865639/state-of-mongodb-march-2010. OK"
+  ,result
+);
+
+// std::string result
+RT <a href="http://twitter.com/mongodb">@mongodb</a>: State of
+<a href="http://twitter.com/search?q=%23MongoDB">#MongoDB</a> March 2010
+<a href="THE LONG URL">SAME LONG URL</a>. OK
+
+
+---
+Custom generation
+---
+
+struct my_push_hash
+{
+    template <typename S, typename C>
+    struct result { typedef void type; };
+
+    void operator()(std::string& buf, std::string str) const
+    {
+        buf += "#" + str;
+    }
+};
+struct my_push_at
+{
+    template <typename S, typename C>
+    struct result { typedef void type; };
+
+    void operator()(std::string& buf, std::string str) const
+    {
+        buf += "@" + str;
+    }
+};
+struct my_push_url
+{
+    template <typename S, typename C>
+    struct result { typedef void type; };
+
+    void operator()(std::string& buf, std::string str) const
+    {
+        buf += "http://" + str;
+    }
+};
+
+// custom generators as template arguments
+runpac::tweet_parser<iter_t, my_push_at, my_push_hash, my_push_url> p;
+
+std::string result;
+
+// parse with spirit API
+boost::spirit::qi::parse(first, last, p, result)
+
+
+---
+Build tweexx
+---
+
+None, header only.
+#include "tweexx.hpp"
+
+
+---
+Build demo.cpp and test.cpp
+---
+
+$ g++ -O3 -o demo -I/path/to/boost/include demo.cpp
+$ ./demo (interactive)
+
+$ g++ -O3 -o test -I/path/to/boost/include test.cpp
+$ ./test
